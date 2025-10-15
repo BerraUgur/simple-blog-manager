@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import Button from '../UI/Button';
 
 const EditBlogModal = ({ blog, onClose, onSave }) => {
+  // State for form data and errors
   const [formData, setFormData] = useState({
     title: '',
     content: '',
@@ -11,6 +13,7 @@ const EditBlogModal = ({ blog, onClose, onSave }) => {
 
   const [errors, setErrors] = useState({});
 
+  // Update form data when blog changes
   useEffect(() => {
     if (blog) {
       setFormData({
@@ -22,20 +25,23 @@ const EditBlogModal = ({ blog, onClose, onSave }) => {
     }
   }, [blog]);
 
+  // Validate form fields (all fields required)
   const validateForm = () => {
     const newErrors = {};
-    if (!formData.title.trim()) newErrors.title = 'Başlık zorunludur';
-    if (!formData.content.trim()) newErrors.content = 'İçerik zorunludur';
-    if (!formData.author.trim()) newErrors.author = 'Yazar zorunludur';
-    if (!formData.date) newErrors.date = 'Tarih zorunludur';
-    
+    if (!formData.title.trim()) newErrors.title = 'Title is required';
+    if (!formData.content.trim()) newErrors.content = 'Content is required';
+    if (!formData.author.trim()) newErrors.author = 'Author is required';
+    if (!formData.date) newErrors.date = 'Date is required';
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
+  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
+      // Save edited blog post and close modal
       onSave({
         ...blog,
         ...formData
@@ -44,6 +50,7 @@ const EditBlogModal = ({ blog, onClose, onSave }) => {
     }
   };
 
+  // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -58,8 +65,9 @@ const EditBlogModal = ({ blog, onClose, onSave }) => {
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
       <div className="bg-white rounded-lg shadow-xl p-6 w-full max-w-2xl">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-2xl font-bold">Blog Düzenle</h2>
+          <h2 className="text-2xl font-bold">Edit Blog</h2>
           <button
+            aria-label="Close"
             onClick={onClose}
             className="text-gray-500 hover:text-gray-700"
           >
@@ -68,8 +76,9 @@ const EditBlogModal = ({ blog, onClose, onSave }) => {
         </div>
 
         <form onSubmit={handleSubmit}>
+          {/* Title input */}
           <div className="mb-4">
-            <label className="block text-gray-700 mb-2">Başlık</label>
+            <label className="block text-gray-700 mb-2">Title</label>
             <input
               type="text"
               name="title"
@@ -80,8 +89,9 @@ const EditBlogModal = ({ blog, onClose, onSave }) => {
             {errors.title && <p className="text-red-500 text-sm mt-1">{errors.title}</p>}
           </div>
 
+          {/* Content input */}
           <div className="mb-4">
-            <label className="block text-gray-700 mb-2">İçerik</label>
+            <label className="block text-gray-700 mb-2">Content</label>
             <textarea
               name="content"
               value={formData.content}
@@ -91,8 +101,9 @@ const EditBlogModal = ({ blog, onClose, onSave }) => {
             {errors.content && <p className="text-red-500 text-sm mt-1">{errors.content}</p>}
           </div>
 
+          {/* Author input */}
           <div className="mb-4">
-            <label className="block text-gray-700 mb-2">Yazar</label>
+            <label className="block text-gray-700 mb-2">Author</label>
             <input
               type="text"
               name="author"
@@ -103,8 +114,9 @@ const EditBlogModal = ({ blog, onClose, onSave }) => {
             {errors.author && <p className="text-red-500 text-sm mt-1">{errors.author}</p>}
           </div>
 
+          {/* Date input */}
           <div className="mb-4">
-            <label className="block text-gray-700 mb-2">Tarih</label>
+            <label className="block text-gray-700 mb-2">Date</label>
             <input
               type="date"
               name="date"
@@ -115,20 +127,14 @@ const EditBlogModal = ({ blog, onClose, onSave }) => {
             {errors.date && <p className="text-red-500 text-sm mt-1">{errors.date}</p>}
           </div>
 
+          {/* Action buttons */}
           <div className="flex justify-end gap-2">
-            <button
-              type="button"
-              onClick={onClose}
-              className="px-4 py-2 border rounded hover:bg-gray-100"
-            >
-              İptal
-            </button>
-            <button
-              type="submit"
-              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-            >
-              Kaydet
-            </button>
+            <Button type="button" color="outline" size="sm" aria-label="Cancel" onClick={onClose}>
+              Cancel
+            </Button>
+            <Button type="submit" color="blue" size="sm" aria-label="Save">
+              Save
+            </Button>
           </div>
         </form>
       </div>
@@ -148,4 +154,4 @@ EditBlogModal.propTypes = {
   onSave: PropTypes.func.isRequired,
 };
 
-export default EditBlogModal; 
+export default EditBlogModal;

@@ -1,75 +1,75 @@
-# Blog Yönetim Uygulaması
+# Blog Management Application
 
-Bu proje, React ve Tailwind CSS kullanılarak geliştirilmiş bir blog yönetim uygulamasıdır.
+## Project Description
+This project is a modern blog management application built with React and Tailwind CSS. Users can list blog posts, add new posts, view post details, edit and delete posts. The app includes extra features such as search, filtering, sorting, and form validation.
 
-## Özellikler
-
-- Blog yazılarını listeleme
-- Yeni blog ekleme
-- Blog düzenleme
-- Blog silme
-- Başlık, içerik veya yazara göre arama
-- Tarih veya yazara göre sıralama
-- Form validasyonları
-- Responsive tasarım
-
-## Ekran Görüntüleri
-
-![Ana Sayfa](screenshots/main.png)
-![Blog Ekleme](screenshots/add-blog.png)
-![Blog Düzenleme](screenshots/edit-blog.png)
-
-## Kurulum
-
-1. Projeyi klonlayın:
-```bash
-git clone https://github.com/kullaniciadi/blog-yonetim.git
-cd blog-yonetim
+## Flow Diagram
+```
+User
+  │
+  ▼
+Home Page (App.jsx)
+  │
+  ├── Blog List View
+  │      │
+  │      ├─ BlogList.jsx
+  │      │     ├─ Search & Sort
+  │      │     ├─ BlogItem.jsx (for each blog)
+  │      │     │     ├─ Details (with Modal)
+  │      │     │     ├─ Edit (with EditBlogModal.jsx)
+  │      │     │     └─ Delete
+  │      │     └─ EditBlogModal.jsx (modal for editing)
+  │      │
+  │      └─ Blog data: localStorage + blogData.js
+  │
+  └── Add New Blog View
+       │
+       └─ AddNewBlog.jsx (Form)
+           └─ Button.jsx (Form submit)
 ```
 
-2. Bağımlılıkları yükleyin:
-```bash
-npm install
-```
-
-3. Geliştirme sunucusunu başlatın:
-```bash
-npm run dev
-```
-
-4. Tarayıcınızda [http://localhost:5173](http://localhost:5173) adresini açın.
-
-## Kullanılan Teknolojiler
-
-- React
-- Tailwind CSS
-- PropTypes
-- Vite
-
-## Proje Yapısı
-
+## File and Folder Structure
 ```
 src/
-  ├── components/
-  │   └── BlogList/
-  │       ├── BlogItem.jsx
-  │       ├── BlogList.jsx
-  │       ├── AddNewBlog.jsx
-  │       └── EditBlogModal.jsx
-  ├── data/
-  │   └── blogData.js
-  ├── App.jsx
-  └── main.jsx
+  components/
+   Blogs/
+    BlogList.jsx
+    BlogItem.jsx
+    AddNewBlog.jsx
+    EditBlogModal.jsx
+   UI/
+    Button.jsx
+  data/
+   blogData.js
+  App.jsx
+  index.css
+  main.jsx
 ```
 
-## Katkıda Bulunma
+## Features
+- List blog posts
+- Search and filter blog posts
+- Sort by date or author
+- View blog details in a modal
+- Add, edit, and delete blog posts
+- Form validation for all fields
+- Responsive and modern UI (Tailwind CSS)
+- Persistent blog data with localStorage
+- Reusable Button component
 
-1. Bu depoyu fork edin
-2. Yeni bir branch oluşturun (`git checkout -b feature/yeniOzellik`)
-3. Değişikliklerinizi commit edin (`git commit -am 'Yeni özellik: Açıklama'`)
-4. Branch'inizi push edin (`git push origin feature/yeniOzellik`)
-5. Pull Request oluşturun
-
-## Lisans
-
-Bu proje MIT lisansı altında lisanslanmıştır. Daha fazla bilgi için `LICENSE` dosyasına bakın.
+## Installation and Usage
+1. **Clone the repository:**
+  ```bash
+  git clone https://github.com/BerraUgur/simple-blog-manager.git
+  cd odev1r
+  ```
+2. **Install dependencies:**
+  ```bash
+  npm install
+  ```
+3. **Start the project:**
+  ```bash
+  npm run dev
+  ```
+4. **Open the app in your browser:**
+  - Usually [http://localhost:5173](http://localhost:5173)

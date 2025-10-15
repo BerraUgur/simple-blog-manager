@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import Button from '../UI/Button';
 
 const AddNewBlog = ({ onAdd }) => {
+  // State for form data and errors
   const [formData, setFormData] = useState({
     title: '',
     content: '',
@@ -11,20 +13,23 @@ const AddNewBlog = ({ onAdd }) => {
 
   const [errors, setErrors] = useState({});
 
+  // Validate form fields (all fields required)
   const validateForm = () => {
     const newErrors = {};
-    if (!formData.title.trim()) newErrors.title = 'Başlık zorunludur';
-    if (!formData.content.trim()) newErrors.content = 'İçerik zorunludur';
-    if (!formData.author.trim()) newErrors.author = 'Yazar zorunludur';
-    if (!formData.date) newErrors.date = 'Tarih zorunludur';
-    
+    if (!formData.title.trim()) newErrors.title = 'Title is required';
+    if (!formData.content.trim()) newErrors.content = 'Content is required';
+    if (!formData.author.trim()) newErrors.author = 'Author is required';
+    if (!formData.date) newErrors.date = 'Date is required';
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
+  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
+      // Add new blog post and reset form
       onAdd({
         ...formData,
         id: Date.now()
@@ -38,6 +43,7 @@ const AddNewBlog = ({ onAdd }) => {
     }
   };
 
+  // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -48,10 +54,11 @@ const AddNewBlog = ({ onAdd }) => {
 
   return (
     <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-md p-6">
-      <h2 className="text-2xl font-bold mb-4">Yeni Blog Ekle</h2>
-      
+      <h2 className="text-2xl font-bold mb-4">Add New Blog</h2>
+
+      {/* Title input */}
       <div className="mb-4">
-        <label className="block text-gray-700 mb-2">Başlık</label>
+        <label className="block text-gray-700 mb-2">Title</label>
         <input
           type="text"
           name="title"
@@ -62,8 +69,9 @@ const AddNewBlog = ({ onAdd }) => {
         {errors.title && <p className="text-red-500 text-sm mt-1">{errors.title}</p>}
       </div>
 
+      {/* Content input */}
       <div className="mb-4">
-        <label className="block text-gray-700 mb-2">İçerik</label>
+        <label className="block text-gray-700 mb-2">Content</label>
         <textarea
           name="content"
           value={formData.content}
@@ -73,8 +81,9 @@ const AddNewBlog = ({ onAdd }) => {
         {errors.content && <p className="text-red-500 text-sm mt-1">{errors.content}</p>}
       </div>
 
+      {/* Author input */}
       <div className="mb-4">
-        <label className="block text-gray-700 mb-2">Yazar</label>
+        <label className="block text-gray-700 mb-2">Author</label>
         <input
           type="text"
           name="author"
@@ -85,8 +94,9 @@ const AddNewBlog = ({ onAdd }) => {
         {errors.author && <p className="text-red-500 text-sm mt-1">{errors.author}</p>}
       </div>
 
+      {/* Date input */}
       <div className="mb-4">
-        <label className="block text-gray-700 mb-2">Tarih</label>
+        <label className="block text-gray-700 mb-2">Date</label>
         <input
           type="date"
           name="date"
@@ -97,12 +107,10 @@ const AddNewBlog = ({ onAdd }) => {
         {errors.date && <p className="text-red-500 text-sm mt-1">{errors.date}</p>}
       </div>
 
-      <button
-        type="submit"
-        className="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600"
-      >
-        Blog Ekle
-      </button>
+      {/* Submit button */}
+      <Button type="submit" color="green" size="md" aria-label="Add Blog">
+        Add Blog
+      </Button>
     </form>
   );
 };
@@ -111,4 +119,4 @@ AddNewBlog.propTypes = {
   onAdd: PropTypes.func.isRequired
 };
 
-export default AddNewBlog; 
+export default AddNewBlog;

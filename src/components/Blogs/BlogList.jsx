@@ -4,18 +4,22 @@ import EditBlogModal from './EditBlogModal';
 import PropTypes from 'prop-types';
 
 const BlogList = ({ blogs, setBlogs }) => {
+  // State for search term, sort option, and editing blog
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState('date');
   const [editingBlog, setEditingBlog] = useState(null);
 
+  // Delete a blog post by id
   const handleDelete = (id) => {
     setBlogs(blogs.filter(blog => blog.id !== id));
   };
 
+  // Set the blog to be edited
   const handleEdit = (blog) => {
     setEditingBlog(blog);
   };
 
+  // Save the edited blog post
   const handleSaveEdit = (updatedBlog) => {
     setBlogs(blogs.map(blog => 
       blog.id === updatedBlog.id ? updatedBlog : blog
@@ -23,6 +27,9 @@ const BlogList = ({ blogs, setBlogs }) => {
     setEditingBlog(null);
   };
 
+  // Filter and sort blogs based on search and sort options
+  // Filtering checks title, content, and author fields
+  // Sorting by date (newest first) or author name (alphabetical)
   const filteredAndSortedBlogs = blogs
     .filter(blog => 
       blog.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -38,10 +45,11 @@ const BlogList = ({ blogs, setBlogs }) => {
 
   return (
     <div className="container mx-auto px-4 py-8">
+      {/* Search input and sort dropdown */}
       <div className="mb-6 flex flex-col md:flex-row gap-4">
         <input
           type="text"
-          placeholder="Blog ara..."
+          placeholder="Search blog..."
           className="flex-1 p-2 border rounded"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
@@ -51,10 +59,11 @@ const BlogList = ({ blogs, setBlogs }) => {
           value={sortBy}
           onChange={(e) => setSortBy(e.target.value)}
         >
-          <option value="date">Tarihe Göre Sırala</option>
-          <option value="author">Yazara Göre Sırala</option>
+          <option value="date">Sort by Date</option>
+          <option value="author">Sort by Author</option>
         </select>
       </div>
+      {/* Blog list grid */}
       <div className="grid gap-6">
         {filteredAndSortedBlogs.map(blog => (
           <BlogItem
@@ -66,6 +75,7 @@ const BlogList = ({ blogs, setBlogs }) => {
         ))}
       </div>
 
+      {/* Edit modal for blog post */}
       {editingBlog && (
         <EditBlogModal
           blog={editingBlog}
@@ -90,4 +100,4 @@ BlogList.propTypes = {
   setBlogs: PropTypes.func.isRequired,
 };
 
-export default BlogList; 
+export default BlogList;
