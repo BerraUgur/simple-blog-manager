@@ -61,7 +61,7 @@ src/
 1. **Clone the repository:**
   ```bash
   git clone https://github.com/BerraUgur/simple-blog-manager.git
-  cd odev1r
+  cd simple-blog-manager
   ```
 2. **Install dependencies:**
   ```bash
